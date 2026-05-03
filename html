@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mini SIS (Student Information System)</title>
+
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/sql-wasm.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>Mini SIS</h1>
+    <p class="subtitle">Web Portal (doing) + SQLite (Students • Faculty • Courses • Enrollments • Grades)</p>
+  </header>
+
+  <nav class="tabs">
+    <button id="tabBtnRegistrar" class="tab active" type="button">Registrar</button>
+    <button id="tabBtnStudent" class="tab" type="button">Student</button>
+    <button id="tabBtnFaculty" class="tab" type="button">Faculty</button>
+    <button id="tabBtnReports" class="tab" type="button">Reports</button>
+  </nav>
+
+  <main class="container">
+    <div id="statusBox" class="card">
+      <div id="statusText">Loading database...</div>
+      <div class="hint">
+        Run with a local server: <code>python -m http.server 8000</code>
+      </div>
+    </div>
+
+    <section id="pageRegistrar" class="card">
+      <h2>Registrar Page</h2>
+
+      <div class="grid2">
+        <div>
+          <h3>Add Student</h3>
+          <label>Name</label><input id="studentName" />
+          <label>Email</label><input id="studentEmail" />
+          <label>Major</label><input id="studentMajor" />
+          <button id="btnAddStudent" type="button">Add Student</button>
+        </div>
+
+        <div>
+          <h3>Add Faculty</h3>
+          <label>Name</label><input id="facultyName" />
+          <label>Email</label><input id="facultyEmail" />
+          <label>Department</label><input id="facultyDept" />
+          <button id="btnAddFaculty" type="button">Add Faculty</button>
+        </div>
+      </div>
+
+      <hr />
+
+      <h3>Add Course</h3>
+      <div class="grid4">
+        <div><label>Title</label><input id="courseTitle" /></div>
+        <div><label>Credits</label><input id="courseCredits" type="number" value="3" /></div>
+        <div><label>Capacity</label><input id="courseCapacity" type="number" value="30" /></div>
+        <div><label>Faculty</label><select id="courseFacultySelect"></select></div>
+      </div>
+      <button id="btnAddCourse" type="button">Add Course</button>
+
+      <hr />
+      <h3>Current Data (Preview)</h3>
+      <div id="registrarPreview"></div>
+    </section>
+
+    <section id="pageStudent" class="card hidden">
+      <h2>Student Page</h2>
+      <div class="grid2">
+        <div><label>Select Student</label><select id="studentSelect"></select></div>
+        <div><label>Term</label><input id="studentTerm" value="Fall 2025" /></div>
+      </div>
+
+      <h3>Available Courses (Seats Left)</h3>
+      <div id="availableCoursesBox"></div>
+
+      <h3>Your Schedule</h3>
+      <div id="studentScheduleBox"></div>
+    </section>
+
+    <section id="pageFaculty" class="card hidden">
+      <h2>Faculty Page</h2>
+      <div class="grid2">
+        <div><label>Select Faculty</label><select id="facultySelect"></select></div>
+        <div><label>Term</label><input id="facultyTerm" value="Fall 2025" /></div>
+      </div>
+
+      <h3>Your Courses</h3>
+      <div id="facultyCoursesBox"></div>
+
+      <h3>Grade Submission</h3>
+      <div class="grid2">
+        <div><label>Choose Course</label><select id="facultyCourseSelect"></select></div>
+        <div class="hint">Click <b>Set Grade</b> to enter A/B/C/D/F.</div>
+      </div>
+
+      <div id="gradeRosterBox"></div>
+    </section>
+
+    <section id="pageReports" class="card hidden">
+      <h2>Reports Page</h2>
+      <div class="grid2">
+        <div><label>Term</label><input id="reportTerm" value="Fall 2025" /></div>
+        <div><label>Select Student (Transcript)</label><select id="reportStudentSelect"></select></div>
+      </div>
+
+      <h3>Seats Remaining per Course</h3>
+      <div id="reportSeatsBox"></div>
+
+      <h3>Student Transcript</h3>
+      <div id="reportTranscriptBox"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
